@@ -6,6 +6,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/gradle@master
         env:
