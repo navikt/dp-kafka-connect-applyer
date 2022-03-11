@@ -7,9 +7,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: gradle/gradle-build-action@v2
       - uses: snyk/actions/setup@master
-      - run: ls -lah /usr/local/bin/snyk*
 
-      - run: ls -lah
       - name: snyk test
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
