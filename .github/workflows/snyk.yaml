@@ -13,9 +13,10 @@ jobs:
         with:
           command: test
           args: |
-            --all-sub-projects
             --sarif-file-output=snyk.sarif 
             --org=teamdagpenger
+            --fail-on=all
+            app
 
       - name: Upload result to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v1
@@ -38,3 +39,4 @@ jobs:
             --project-name=${{ github.repository }}
             --remote-repo-url=https://github.com/${{ github.repository }}.git
             --org=teamdagpenger
+            app
