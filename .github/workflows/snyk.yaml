@@ -34,7 +34,6 @@ jobs:
         with:
           command: monitor
           args: |
-            --all-sub-projects
             --project-name=${{ github.repository }}
             --remote-repo-url=https://github.com/${{ github.repository }}.git
             --org=teamdagpenger
