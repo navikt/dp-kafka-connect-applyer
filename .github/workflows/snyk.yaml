@@ -8,14 +8,16 @@ jobs:
       - uses: gradle/gradle-build-action@v2
       - uses: snyk/actions/setup@master
       - run: ls -lah /usr/local/bin/snyk*
+
+      - run: ls -lah
       - name: snyk test
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
-          /usr/local/bin/snyk-linux test
-          --sarif-file-output=snyk.sarif 
-          --org=teamdagpenger
-          --fail-on=all
+          /usr/local/bin/snyk test \
+          --sarif-file-output=snyk.sarif \
+          --org=teamdagpenger \
+          --fail-on=all \
           app
 
       # - name: Run Snyk to check for vulnerabilities
