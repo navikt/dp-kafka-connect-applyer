@@ -12,7 +12,7 @@ jobs:
           java-version: 17
       - uses: gradle/gradle-build-action@v2
 
-      - run: ./gradlew assemble --configuration-cache
+      - run: ./gradlew classes --configuration-cache
 
       - name: Run snyk test
         env:
