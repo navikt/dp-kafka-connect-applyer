@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      #- uses: snyk/actions/setup@master
+      - uses: snyk/actions/setup@master
       - uses: actions/setup-java@v2
         with:
           distribution: temurin
@@ -14,27 +14,15 @@ jobs:
 
       - run: gradle classes --configuration-cache
 
-      #- name: Run snyk test
-      #  env:
-      #    SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      #  run: |
-      #    /usr/local/bin/snyk test \
-      #    --sarif-file-output=snyk.sarif \
-      #    --org=teamdagpenger \
-      #    --fail-on=all \
-      #    app
-
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/gradle@master
+      - name: Run snyk test
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: test
-          args: |
-            --sarif-file-output=snyk.sarif
-            --org=teamdagpenger
-            --fail-on=all
-            app
+        run: |
+          snyk test \
+          --sarif-file-output=snyk.sarif \
+          --org=teamdagpenger \
+          --fail-on=all \
+          app
 
       - name: Upload result to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v1
