@@ -7,17 +7,27 @@ jobs:
       - uses: actions/checkout@v3
       - uses: gradle/gradle-build-action@v2
 
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/gradle@master
+      - name: snyk test
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: test
-          args: |
-            --sarif-file-output=snyk.sarif 
-            --org=teamdagpenger
-            --fail-on=all
-            app
+        run: |
+          npx -y synk test
+          --sarif-file-output=snyk.sarif 
+          --org=teamdagpenger
+          --fail-on=all
+          app
+
+      # - name: Run Snyk to check for vulnerabilities
+      #   uses: snyk/actions/gradle@master
+      #   env:
+      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      #   with:
+      #     command: test
+      #     args: |
+      #       --sarif-file-output=snyk.sarif
+      #       --org=teamdagpenger
+      #       --fail-on=all
+      #       app
 
       - name: Upload result to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v1
