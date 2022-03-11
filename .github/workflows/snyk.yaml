@@ -11,8 +11,7 @@ jobs:
           distribution: temurin
           java-version: 17
       - uses: gradle/gradle-build-action@v2
-
-      # - run: gradle classes --configuration-cache
+      - run: gradle classes --configuration-cache
 
       - name: Run snyk test
         env:
