@@ -21,6 +21,7 @@ jobs:
           --sarif-file-output=snyk.sarif \
           --org=teamdagpenger \
           --fail-on=all \
+          --prune-repeated-subdependencies --show-vulnerable=none --configuration-attributes=buildtype:release,usage:java-runtime \
           app
 
       - name: Upload result to GitHub Code Scanning
