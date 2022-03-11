@@ -39,31 +39,20 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Archive NAIS yaml
-        if: github.ref == 'refs/heads/main'
-        uses: actions/upload-artifact@v1
-        with:
-          name: nais-yaml
-          path: app/.nais
-
   deploy-dev:
     name: Deploy to dev
     needs: [ build ]
     if: github.ref == 'refs/heads/ZZZmain'
     runs-on: ubuntu-latest
     steps:
-      - name: Fetch NAIS yaml
-        uses: actions/download-artifact@v1
-        with:
-          name: nais-yaml
-          path: nais
+      - uses: actions/checkout@v3
 
       - uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
-          RESOURCE: nais/nais.yaml,nais/hpa.yaml
-          VARS: nais/dev-vars.yaml
+          RESOURCE: .nais/nais.yaml
+          VARS: .nais/dev-vars.yaml
           PRINT_PAYLOAD: true
 
 #  deploy-prod:
