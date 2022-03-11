@@ -12,7 +12,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
-          synk test
+          /usr/local/bin/synk test
           --sarif-file-output=snyk.sarif 
           --org=teamdagpenger
           --fail-on=all
