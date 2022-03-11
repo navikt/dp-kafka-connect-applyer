@@ -6,12 +6,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: gradle/gradle-build-action@v2
+      - uses: snyk/actions/setup@master
 
       - name: snyk test
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
-          npx -y synk test
+          synk test
           --sarif-file-output=snyk.sarif 
           --org=teamdagpenger
           --fail-on=all
