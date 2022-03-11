@@ -7,12 +7,12 @@ jobs:
       - uses: actions/checkout@v3
       - uses: gradle/gradle-build-action@v2
       - uses: snyk/actions/setup@master
-
+      - run: ls -lah /usr/local/bin/snyk*
       - name: snyk test
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
-          /usr/local/bin/synk test
+          /usr/local/bin/snyk-linux test
           --sarif-file-output=snyk.sarif 
           --org=teamdagpenger
           --fail-on=all
