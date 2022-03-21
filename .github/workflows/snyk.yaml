@@ -11,7 +11,7 @@ jobs:
           distribution: temurin
           java-version: 17
       - uses: gradle/gradle-build-action@v2
-      - run: gradle :app:dependencies
+      - run: gradle :app:test
 
       - name: Run snyk test
         env:
@@ -23,36 +23,15 @@ jobs:
           --fail-on=all \
           app
 
-        #      - name: Upload result to GitHub Code Scanning
-        #        uses: github/codeql-action/upload-sarif@v1
-        #        with:
-        #          sarif_file: snyk.sarif
-
-  test-npm:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v2
+      - name: Upload result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v1
         with:
-          distribution: temurin
-          java-version: 17
-      - uses: gradle/gradle-build-action@v2
-      - run: gradle :app:dependencies
+          sarif_file: snyk.sarif
 
-      - name: Run snyk test
+      - name: Run snyk monitor
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: |
-          npx -y snyk test \
-          --sarif-file-output=snyk.sarif \
-          --org=teamdagpenger \
-          --fail-on=all \
-          app
-
-          #      - name: Upload result to GitHub Code Scanning
-          #        uses: github/codeql-action/upload-sarif@v1
-          #        with:
-          #          sarif_file: snyk.sarif
+        run: snyk monitor --org=teamdagpenger app
 
   monitor:
     runs-on: ubuntu-latest
