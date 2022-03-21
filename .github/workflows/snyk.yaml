@@ -60,6 +60,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - uses: actions/setup-java@v2
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/gradle-build-action@v2
+      - run: gradle :app:dependencies
+
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/gradle@master
         env:
@@ -70,5 +77,4 @@ jobs:
             --project-name=${{ github.repository }}
             --remote-repo-url=https://github.com/${{ github.repository }}.git
             --org=teamdagpenger
-            --fail-on=all 
             app
