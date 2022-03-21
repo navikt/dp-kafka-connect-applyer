@@ -21,13 +21,12 @@ jobs:
           --sarif-file-output=snyk.sarif \
           --org=teamdagpenger \
           --fail-on=all \
-          --prune-repeated-subdependencies --show-vulnerable=none --configuration-attributes=buildtype:release,usage:java-runtime \
           app
 
-          #      - name: Upload result to GitHub Code Scanning
-          #        uses: github/codeql-action/upload-sarif@v1
-          #        with:
-          #          sarif_file: snyk.sarif
+        #      - name: Upload result to GitHub Code Scanning
+        #        uses: github/codeql-action/upload-sarif@v1
+        #        with:
+        #          sarif_file: snyk.sarif
 
   test-npm:
     runs-on: ubuntu-latest
@@ -48,7 +47,6 @@ jobs:
           --sarif-file-output=snyk.sarif \
           --org=teamdagpenger \
           --fail-on=all \
-          --prune-repeated-subdependencies --show-vulnerable=none --configuration-attributes=buildtype:release,usage:java-runtime \
           app
 
           #      - name: Upload result to GitHub Code Scanning
@@ -72,4 +70,5 @@ jobs:
             --project-name=${{ github.repository }}
             --remote-repo-url=https://github.com/${{ github.repository }}.git
             --org=teamdagpenger
+            --fail-on=all 
             app
