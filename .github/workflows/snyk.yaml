@@ -24,10 +24,37 @@ jobs:
           --prune-repeated-subdependencies --show-vulnerable=none --configuration-attributes=buildtype:release,usage:java-runtime \
           app
 
-      - name: Upload result to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@v1
+          #      - name: Upload result to GitHub Code Scanning
+          #        uses: github/codeql-action/upload-sarif@v1
+          #        with:
+          #          sarif_file: snyk.sarif
+
+  test-npm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v2
         with:
-          sarif_file: snyk.sarif
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/gradle-build-action@v2
+      - run: gradle :app:dependencies
+
+      - name: Run snyk test
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: |
+          npx -y snyk test \
+          --sarif-file-output=snyk.sarif \
+          --org=teamdagpenger \
+          --fail-on=all \
+          --prune-repeated-subdependencies --show-vulnerable=none --configuration-attributes=buildtype:release,usage:java-runtime \
+          app
+
+          #      - name: Upload result to GitHub Code Scanning
+          #        uses: github/codeql-action/upload-sarif@v1
+          #        with:
+          #          sarif_file: snyk.sarif
 
   monitor:
     runs-on: ubuntu-latest
