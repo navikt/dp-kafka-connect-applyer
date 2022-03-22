@@ -1,41 +1,10 @@
 name: Vulnerabilities scanning of dependencies
 on: push
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: snyk/actions/setup@master
-      - uses: actions/setup-java@v2
-        with:
-          distribution: temurin
-          java-version: 17
-      - uses: gradle/gradle-build-action@v2
-      - run: gradle :app:test
-
-      - name: Run snyk test
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: |
-          snyk test \
-          --sarif-file-output=snyk.sarif \
-          --org=teamdagpenger \
-          --fail-on=all \
-          app
-
-      - name: Upload result to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@v1
-        with:
-          sarif_file: snyk.sarif
-
   monitor:
     runs-on: ubuntu-latest
-    continue-on-error: true
     steps:
       - uses: actions/checkout@v3
-
-      - uses: gradle/gradle-build-action@v2
-      - run: gradle :app:dependencies
 
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/gradle@master
