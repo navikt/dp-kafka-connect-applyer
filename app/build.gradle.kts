@@ -10,7 +10,7 @@ dependencies {
     val ktorVersion = "2.0.0-beta-1"
     implementation(project(":modell"))
 
-    implementation("com.github.navikt:rapids-and-rivers:2022.02.28-16.20.1a549dcffaae")
+    implementation("com.github.navikt:rapids-and-rivers:2022.03.20-08.39.e957b9917a89")
     implementation("io.github.microutils:kotlin-logging-jvm:2.1.20")
 
     implementation("io.ktor:ktor-client-core:$ktorVersion")

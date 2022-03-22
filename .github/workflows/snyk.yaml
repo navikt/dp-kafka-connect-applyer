@@ -28,11 +28,6 @@ jobs:
         with:
           sarif_file: snyk.sarif
 
-      - name: Run snyk monitor
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: snyk monitor --org=teamdagpenger app
-
   monitor:
     runs-on: ubuntu-latest
     continue-on-error: true
